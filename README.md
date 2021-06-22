@@ -22,6 +22,9 @@ After finishing the calibration phase, you can begin to use the exoskeleton.
 
 If there is a noticeable offset, you can calibrate the sensors by click on their respective buttons.
 
+## Controller
+The controller has two components, high-level control and low-level control. The high-level control currently has two modes, "Zero-impedance" and "Sinusoidal." The zero-impedance mode essentially sets the reference to zero which is equivalent to making the knee join experience virtually zero impedance as it moves. The sinusoidal mode sets the reference to a sinusoidal response. You can adjust the sine wave's frequency and amplitude in the GUI. 
+
 ## Troubleshooting
 
 ### GUI says "High-level control broke"
