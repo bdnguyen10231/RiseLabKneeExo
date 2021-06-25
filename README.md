@@ -22,12 +22,14 @@ If there is a noticeable offset, you can calibrate the sensors by click on their
 ## Control System
 The controller has two components, high-level control and low-level control. The high-level control currently has two modes, "Zero-impedance" and "Sinusoidal." The zero-impedance mode essentially sets the reference to zero which is equivalent to making the knee join experience virtually zero impedance as it moves. The sinusoidal mode sets the reference to a sinusoidal response. You can adjust the sine wave's frequency and amplitude in the GUI. 
 
-[ExoControl](https://user-images.githubusercontent.com/57163503/123485489-13a54480-d5bf-11eb-8377-378493529515.png)
+The figure below shows how the control system is structured. First, the high level controller determines 
+
+![ExoControl](https://user-images.githubusercontent.com/57163503/123485489-13a54480-d5bf-11eb-8377-378493529515.png)
 
 
 ### High-Level Controller
 
-### Low-Level Controller!
+### Low-Level Controller
 
 ## Software
 The custom software is embedded into two primary components, the CPU (Raspberry Pi 4) and the microcontroller (Teensy 4.1). The CPU is dedicated to running the GUI, which is used to read data, while the microcontroller is dedicated to running the control algorithms and reading the sensor data. The two components communicate over Serial USB so the microcontroller sending data to the CPU does not cause a large delay to the control loop. It should be noted that besides to initialization phase, the microcontroller does not require any information from the CPU while it is activating the exoskeleton.
