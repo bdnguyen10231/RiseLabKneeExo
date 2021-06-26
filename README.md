@@ -13,11 +13,15 @@ Afterwards you will see the GUI show up on your window. Note: it will take a cou
 
 Now before we use the exoskeleton, we need to calibrate it. Clicking the "calibrate" button will attempt to do this. During the calibration sequency, the GUI sends a calibration command to the odrive through the Odrive Python API. More information is available on the Odrive Robotics website. https://docs.odriverobotics.com/ 
 
+(Pictures will be included)
+
 During calibration, you should hear a noticeable beep and then the knee joint will in one direction then swap directions and finish. If the exoskeleton does not swap directions, there is something wrong. See the troubleshooting section. 
 
 After finishing the calibration phase, you can begin to use the exoskeleton. 
 
 If there is a noticeable offset, you can calibrate the sensors by click on their respective buttons.
+
+(Pictures will be included)
 
 ## Control System
 The controller has two components, high-level control and low-level control. The high-level control currently has two modes, "Zero-impedance" and "Sinusoidal." The zero-impedance mode essentially sets the reference to zero which is equivalent to making the knee join experience virtually zero impedance as it moves. The sinusoidal mode sets the reference to a sinusoidal response. You can adjust the sine wave's frequency and amplitude in the GUI. 
