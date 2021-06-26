@@ -85,6 +85,8 @@ void getPiData(String message) {
 
 ### Low-Level Controller
 
+The Low-Level Controller uses a PID control structure. The derivativation for the discretization is performed by [Scilab](https://www.scilab.org/discrete-time-pid-controller-implementation). The low pass filter is tuned by collecting data and using a matlab code to see how the roll-off frequency affects the output. The code is included inside the "simulation" folder.
+
 ## Software
 The custom software is embedded into two primary components, the CPU (Raspberry Pi 4) and the microcontroller (Teensy 4.1). The CPU is dedicated to running the GUI, which is used to read data, while the microcontroller is dedicated to running the control algorithms and reading the sensor data. The two components communicate over Serial USB so the microcontroller sending data to the CPU does not cause a large delay to the control loop. It should be noted that besides to initialization phase, the microcontroller does not require any information from the CPU while it is activating the exoskeleton.
 
