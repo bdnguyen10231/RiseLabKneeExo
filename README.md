@@ -22,19 +22,71 @@ If there is a noticeable offset, you can calibrate the sensors by click on their
 ## Control System
 The controller has two components, high-level control and low-level control. The high-level control currently has two modes, "Zero-impedance" and "Sinusoidal." The zero-impedance mode essentially sets the reference to zero which is equivalent to making the knee join experience virtually zero impedance as it moves. The sinusoidal mode sets the reference to a sinusoidal response. You can adjust the sine wave's frequency and amplitude in the GUI. 
 
-The figure below shows how the control system is structured. First, the high level controller determines 
+The figure below shows how the control system is structured. First, the high level controller determines the reference torque and that is sent to the low level controller which is then used to compute the desired current to get the exoskeleton output to match the reference.
 
 ![ExoControl](https://user-images.githubusercontent.com/57163503/123485489-13a54480-d5bf-11eb-8377-378493529515.png)
 
-
 ### High-Level Controller
+
+As mentioned earlier, the high level controller has two modes, however, more modes can be added. This section is aimed at showing you how. Below is an example of how a sinusoidal reference should be implemented on the microcontroller.
+
+The way to implement a high level controller is to first create a int variable that will only be 0 or 1, indicating whether or not the controller is on or off. In the hlc.h header file write something like this.
+
+```
+class hlc {
+
+public:
+int sinusoidal = 0;
+
+float freq = 0.0;
+float amp = 0.0;
+
+float reference = 0.0;
+
+float controller(); 
+
+};
+```
+
+Now in the source file write something like this
+
+```
+float hlc::controller() {
+
+  if (sinusoidal == 1) {
+    reference = amp*sin(freq*current_time*2*M_PI/1000);
+  }
+
+  return reference = 0;
+}
+```
+
+In the main loop, the high-level controller will return a reference every iteration. Remember to add a method in the GUI in order to activate the mode and send it over to the microcontroller. Once the microcontroller controller recieves the message, it will attempt parse the data based on the commas. In the main arduino script, there is a function called "getPiData", this is the function that parses the data from the GUI. In order to read an additional value in the microcontroller, we have to parse the data manually. Below is an example of how the data with two commas(three values) is parsed.
+
+```
+void getPiData(String message) {
+
+  // gets the location of the comma's
+  int commaIndex = message.indexOf(',');
+  int secondCommaIndex = message.indexOf(',', commaIndex + 1);
+  
+  // gets values between the comma's
+  String firstValue = message.substring(0, commaIndex);
+  String secondValue = message.substring(commaIndex + 1, secondCommaIndex);
+  String thirdValue = message.substring(secondCommaIndex + 1);
+  
+  // cast the String data to its correct type
+  float data = firstValue.toFloat();
+  float mode1 = secondValue.toInt();
+  float mode2 = thirdValue.toInt();
+  
+}
+```
 
 ### Low-Level Controller
 
 ## Software
 The custom software is embedded into two primary components, the CPU (Raspberry Pi 4) and the microcontroller (Teensy 4.1). The CPU is dedicated to running the GUI, which is used to read data, while the microcontroller is dedicated to running the control algorithms and reading the sensor data. The two components communicate over Serial USB so the microcontroller sending data to the CPU does not cause a large delay to the control loop. It should be noted that besides to initialization phase, the microcontroller does not require any information from the CPU while it is activating the exoskeleton.
-
-## Simulation
 
 ## Troubleshooting
 
