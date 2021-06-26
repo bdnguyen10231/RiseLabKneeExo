@@ -87,8 +87,37 @@ void getPiData(String message) {
 
 The Low-Level Controller uses a PID control structure. The derivativation for the discretization is performed by [Scilab](https://www.scilab.org/discrete-time-pid-controller-implementation). The low pass filter is tuned by collecting data and using a matlab code to see how the roll-off frequency affects the output. The code is included inside the "simulation" folder.
 
-## Software
-The custom software is embedded into two primary components, the CPU (Raspberry Pi 4) and the microcontroller (Teensy 4.1). The CPU is dedicated to running the GUI, which is used to read data, while the microcontroller is dedicated to running the control algorithms and reading the sensor data. The two components communicate over Serial USB so the microcontroller sending data to the CPU does not cause a large delay to the control loop. It should be noted that besides to initialization phase, the microcontroller does not require any information from the CPU while it is activating the exoskeleton.
+## Other Software (ODrive)
+
+Using the odrive independently of the GUI and microcontroller is crucial at times, especially for debugging. You can find all this information on the odrive [documentation](https://docs.odriverobotics.com/) but I will go through an example with on how to run the odrive for basic torque control.
+
+To begin, we need to open the odrivetool so go into a terminal and type:
+
+```
+$ odrivetool
+```
+
+Afterwards, wait for the odrive to connect. Then to manually calibrate the motor use this command:
+
+```
+<axis>.requested_state = 3
+```
+
+Where the number 3 is the key to the full calibration sequence, as documented by the odrive [docs](https://docs.odriverobotics.com/api/odrive.axis.axisstate). It should be noted that axis is where the motor is connected. Typically it is odrv0.axis0 for our setup.
+
+Now to send a torque command, first we need to make sure sure the odrive is in close loop control mode, which is state = 8.
+
+```
+odrv0.axis0.requested_state = 8
+```
+
+Make sure nothing that is connected to the odrive is sending torque commands, for example the microcontroller. Then use this command to input the reference torque:
+
+```
+odrv0.axis0.motor.config.torque_constant = 0
+```
+
+Setting the reference to zero causes is essential zero-impedence mode.
 
 ## Troubleshooting
 
