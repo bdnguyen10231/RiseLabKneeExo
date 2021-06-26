@@ -91,6 +91,10 @@ void getPiData(String message) {
 
 The Low-Level Controller uses a PID control structure. The derivativation for the discretization is performed by [Scilab](https://www.scilab.org/discrete-time-pid-controller-implementation). The low pass filter is tuned by collecting data and using a matlab code to see how the roll-off frequency affects the output. The code is included inside the "simulation" folder.
 
+To tune the PID controller, use the GUI.
+
+(Pictures will be included)
+
 ## Other Software (ODrive)
 
 Using the odrive independently of the GUI and microcontroller is crucial at times, especially for debugging. You can find all this information on the odrive [documentation](https://docs.odriverobotics.com/) but I will go through an example with on how to run the odrive for basic torque control.
