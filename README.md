@@ -36,14 +36,14 @@ The way to implement a high level controller is to first create a int variable t
 class hlc {
 
 public:
-int sinusoidal = 0;
+  int sinusoidal = 0;
 
-float freq = 0.0;
-float amp = 0.0;
+  float freq = 0.0;
+  float amp = 0.0;
 
-float reference = 0.0;
+  float reference = 0.0;
 
-float controller(); 
+  float controller(); 
 
 };
 ```
